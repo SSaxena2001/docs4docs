@@ -26,7 +26,8 @@ navigator.mediaDevices.getUserMedia({
       addVideoStream(video, userVideoStream)
     })
   })
-
+userId=prompt("Enter User Name:")
+document.getElementById("nameUser").innerHTML=userId;
   socket.on('user-connected', userId => {
     setTimeout(() => {
     connectToNewUser(userId, stream)

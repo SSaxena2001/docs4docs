@@ -116,14 +116,19 @@ io.on('connection', socket => {
   })
 })
 
-
+app.get("/wait",(req,res)=>{
+  res.render("wait")
+})
 
 
 
 
 //^ Doctors Section Below ->
+var alert
 app.get("/docWait",(req,res)=>{
-  res.render("docWait")
+  id=req.cookies['docId']
+  url=`http://localhost:3000/${req.cookies['docId']}/video`
+  res.render("docWait",{id:id,url:url})
 })
 app.get("/doc", (req, res) => {
   res.render("docLogin");
@@ -174,12 +179,15 @@ app.post("/docsignup", (req, res) => {
     }
   });
 });
+
 app.get('/video', (req, res) => {
   res.redirect(`/${req.cookies.docId}/video`)
+  
 })
+
 app.get('/:room/video', (req, res) => {
   res.render('room', { roomId: req.params.room })
-  res.clearCookie("docId");
+  
 })
 
 //^ <------- END ------->
