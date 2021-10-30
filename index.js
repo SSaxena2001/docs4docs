@@ -64,8 +64,8 @@ app.post("/", (req, res) => {
         if (user.password == req.body.password) {
           logU = true;
           message = "";
-          res.cookie("email", req.body.email);
-          res.cookie("password", req.body.password);
+          res.cookie("user_email", req.body.email);
+          res.cookie("user_password", req.body.password);
           console.log(req.cookies);
           res.redirect("/home");
         } else {
@@ -115,6 +115,7 @@ io.on('connection', socket => {
     })
   })
 })
+<<<<<<< HEAD
 
 io.on('connection', (socket) => {
   console.log('new user connected');
@@ -133,6 +134,12 @@ io.on('connection', (socket) => {
     socket.broadcast.emit('chat message', msg);         //sending message to all except the sender
   });
 });
+=======
+>>>>>>> 366336346057881779ac31448851c721308280a9
+
+
+
+
 
 
 //^ Doctors Section Below ->
@@ -157,7 +164,7 @@ app.post("/doc", (req, res) => {
           res.cookie("password", req.body.password);
           res.cookie("docId", user._id);
           console.log(req.cookies);
-          res.redirect("/home");
+          res.redirect("/docWait");
         } else {
           res.redirect("/");
           message = "Invalid Password";
@@ -193,8 +200,11 @@ app.get('/video', (req, res) => {
 })
 app.get('/:room/video', (req, res) => {
   res.render('room', { roomId: req.params.room })
+  res.clearCookie("docId");
 })
+
 //^ <------- END ------->
+
 const port = process.env.PORT || 3000;
 server.listen(port, () => {
   console.log(`Listening on http://localhost:${port}`);
