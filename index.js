@@ -115,7 +115,7 @@ io.on('connection', socket => {
     })
   })
 })
-<<<<<<< HEAD
+
 
 io.on('connection', (socket) => {
   console.log('new user connected');
@@ -134,8 +134,6 @@ io.on('connection', (socket) => {
     socket.broadcast.emit('chat message', msg);         //sending message to all except the sender
   });
 });
-=======
->>>>>>> 366336346057881779ac31448851c721308280a9
 
 
 
