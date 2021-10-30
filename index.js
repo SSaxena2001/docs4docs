@@ -64,8 +64,8 @@ app.post("/", (req, res) => {
         if (user.password == req.body.password) {
           logU = true;
           message = "";
-          res.cookie("email", req.body.email);
-          res.cookie("password", req.body.password);
+          res.cookie("user_email", req.body.email);
+          res.cookie("user_password", req.body.password);
           console.log(req.cookies);
           res.redirect("/home");
         } else {
@@ -114,13 +114,11 @@ io.on('connection', socket => {
       socket.broadcast.to(roomId).emit('user-disconnected', userId)
     })
   })
-  socket.on('chatMessage', function(from, msg){
-    io.emit('chatMessage', from, msg);
-  });
-  socket.on('notifyUser', function(user){
-    io.emit('notifyUser', user);
-  });
 })
+
+
+
+
 
 
 //^ Doctors Section Below ->
@@ -145,7 +143,7 @@ app.post("/doc", (req, res) => {
           res.cookie("password", req.body.password);
           res.cookie("docId", user._id);
           console.log(req.cookies);
-          res.redirect("/home");
+          res.redirect("/docWait");
         } else {
           res.redirect("/");
           message = "Invalid Password";
@@ -179,10 +177,13 @@ app.post("/docsignup", (req, res) => {
 app.get('/video', (req, res) => {
   res.redirect(`/${req.cookies.docId}/video`)
 })
-app.get('/:room', (req, res) => {
+app.get('/:room/video', (req, res) => {
   res.render('room', { roomId: req.params.room })
+  res.clearCookie("docId");
 })
+
 //^ <------- END ------->
+
 const port = process.env.PORT || 3000;
 server.listen(port, () => {
   console.log(`Listening on http://localhost:${port}`);
