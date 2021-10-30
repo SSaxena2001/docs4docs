@@ -3,7 +3,12 @@
   <head>
     <link rel="stylesheet" href="css/chat.css" />
     <title>Docs4Docs</title>
+    <script src="socket.io/socket.io.js"></script>
+    <script src="js/chat.js"></script>
   </head>
+  <script>
+      const ROOM_ID = '<%= roomId %>';
+  </script>
   <body>
     <div id="container">
       <h1>
@@ -20,8 +25,5 @@
         </form>
       </div>
     </div>
-
-    <script src="socket.io/socket.io.js"></script>
-    <script src="script.js"></script>
   </body>
 </html>

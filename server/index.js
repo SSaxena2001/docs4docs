@@ -16,14 +16,28 @@ const io = socketIO(server, {
     },
 });
 
+app.get('/', (req, res) => {
+    res.render('login');
+})
 
-app.get('/', function(req, res) {
+app.get('/chat', function(req, res) {
     res.redirect(`/${uuidV4()}`);
 });
 
-app.get('/chat', function(req, res) {
-    res.render('chat');
-})
+app.get('/:roomId/chat', function(req, res) {
+    res.render('chat', {roomId: req.params.roomId});
+});
+
+io.on('connection', socket => {
+    socket.on('join-room', (roomId, userId) => {
+        socket.join(roomId);
+        socket.broadcast.to(roomId).emit('user-connected', userId);
+
+        socket.on('disconnect', () => {
+            socket.broadcast.to(roomId).emit('user-disconnected', userId);
+        });
+    });
+});
 
 
 
