@@ -1,12 +1,30 @@
 <%- include("header") -%>
 <html>
-    
-        <% for( let i = 0; i < listOfDoctors.length; i++ ){%>
-        <ul>
-        <li>Name:<%= listOfDoctors[i].name %></li>
-        <li>Years Of Experience:<%= listOfDoctors[i].yearsOfExperience %></li>
-        <li><a href="/chat">Chat</a></li>
-        <li><a href="/video">Video</a></li>
+	<div class="container">
+    <h2 style="text-align: center; color: #000">Welcome To <span style="color: #fc8019;">Docs4Docs</span></h2>
+
+	<div class="form doclist" style="width: 100%;">
+    	<h4 style="text-align: center; margin-top: 15px;">List of Available Doctors</h4>
+        
+        <ul class="responsive-table">
+
+        	<li class="table-header">
+		      <div class="col col-1">Doctor Name</div>
+		      <div class="col col-2">Years Of Experience</div>
+		      <div class="col col-3">Chat</div>
+		      <div class="col col-4">Video Call</div>
+		    </li>
+		    <% for( let i = 0; i < listOfDoctors.length; i++ ){%>
+		    <li class="table-row">
+		      <div class="col col-1" data-label="Doctor Name"><%= listOfDoctors[i].name %></div>
+		      <div class="col col-2" data-label="Years Of Experience"><%= listOfDoctors[i].yearsOfExperience %></div>
+		      <div class="col col-3" data-label="Chat"><a href="/chat"><img src="css/images/chat.png" width="40"></a></div>
+		      <div class="col col-4" data-label="Video Call"><a href="/video"><img src="css/images/cam.png" width="40"></a></div>
+		    </li>
+		    <%}%>
+        
         </ul>
-        <%}%>
+        
+    </div>
+    </div>
 </html>
