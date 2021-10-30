@@ -6,6 +6,8 @@ const server = require("http").Server(app);
 const socketIO = require("socket.io");
 const { v4: uuidV4 } = require("uuid");
 const cookieParser = require("cookie-parser");
+const User = require("./models/user.model");
+const { validateUserInput } = require("./utils/validators");
 
 app.set("view engine", "ejs");
 app.use(
@@ -16,7 +18,7 @@ app.use(
 app.use(express.static("public"));
 
 app.use(cookieParser());
-mongoose.connect("mongodb://localhost:27017", {
+mongoose.connect("mongodb://localhost:27017/hackDB", {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
@@ -36,8 +38,9 @@ app.get("/", (req, res) => {
 });
 
 app.post("/", (req, res) => {
+  console.log(req.body);
   let { errors, valid } = validateUserInput(
-    req.body.username,
+    req.body.email,
     req.body.password
   );
   if (valid) {
@@ -53,7 +56,7 @@ app.post("/", (req, res) => {
             res.cookie("username", req.body.username);
             res.cookie("password", req.body.password);
             console.log(req.cookies);
-            res.redirect("/test");
+            res.redirect(`/${uuidV4()}`);
           } else {
             res.redirect("/");
             message = "Invalid Password";
@@ -61,7 +64,7 @@ app.post("/", (req, res) => {
           }
         } catch (err) {
           res.redirect("/");
-          message = "Invalid Username";
+          message = "Invalid Email";
           console.log(message);
         }
       }
