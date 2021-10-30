@@ -76,15 +76,14 @@ app.get("/home", (req, res) => {
     },
     function (err, doctors) {
       try {
-        listOfDoctors.push(doctors[k++])
+        console.log(doctors)
       } catch (err) {
-        res.redirect("/");
-        message = "Invalid Email";
+        res.redirect("/home");
+        message = "No Doctors found!";
         console.log(message);
       }
     }
   );
-
   console.log(listOfDoctors);
   res.render("home", { listOfDoctors: listOfDoctors });
 });
