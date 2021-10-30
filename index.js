@@ -1,12 +1,25 @@
 const express = require('express');
 const app = express();
+const mongoose = require("mongoose");
 const server = require('http').Server(app);
 const socketIO = require('socket.io');
 const { v4: uuidV4 } = require('uuid');
-
+const cookieParser = require("cookie-parser");
 
 app.set('view engine', 'ejs');
 app.use(express.static('public'));
+
+app.use(cookieParser());
+mongoose.connect(
+    "mongodb+srv://admin-ieeecas:ieeecasmongodb@cluster0.yozy1.mongodb.net/test?retryWrites=true&w=majority",
+    {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    }
+  );
+  mongoose.connection.once("open", () => {
+    console.log("connected to MONGO");
+  });
 
 
 const io = socketIO(server, {
@@ -19,6 +32,7 @@ const io = socketIO(server, {
 app.get('/', (req, res) => {
     res.render('login');
 })
+
 
 app.get('/chat', function(req, res) {
     res.redirect(`/${uuidV4()}`);
