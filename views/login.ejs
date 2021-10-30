@@ -1,23 +1,22 @@
 <%- include("header") -%>
-<body>
   <div class="container container1">
-      <h3>Welcome To Docs4Docs</h3><br>
-      <form method="POST" action="/">
-          <div class="form-group">
-            <label for="email">Email address:</label>
-            <input type="email" class="form-control" placeholder="Enter email" id="email" name="email">
-          </div>
-          <div class="form-group">
-            <label for="pwd">Password:</label>
-            <input type="password" class="form-control" placeholder="Enter password" id="pwd" name="password">
-          </div>
-          <div class="form-group">
-            <label>
-              <!--<p>Not A User?&nbsp;<a href="/signup">Sign Up Now</a></p>-->
-            </label>
-          </div>
-          <button type="submit" class="btn btn-primary">Submit</button>
-        </form>
+    <h3>Welcome To Docs4Docs</h3>
+    <br />
+    <form method="POST" action="/">
+      <div class="form-group">
+        <label for="email">Email address:</label>
+        <input type="email" class="form-control" placeholder="Enter email" id="email" name="email" />
+      </div>
+      <div class="form-group">
+        <label for="pwd">Password:</label>
+        <input type="password" class="form-control" placeholder="Enter password" id="pwd" name="password" />
+      </div>
+      <div class="form-group">
+        <label>
+          <!--<p>Not A User?&nbsp;<a href="/signup">Sign Up Now</a></p>-->
+        </label>
+      </div>
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
   </div>
-</body>
-</html>
+  <%- include("footer") -%>
