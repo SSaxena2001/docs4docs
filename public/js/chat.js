@@ -1,58 +1,46 @@
-const output = document.getElementById('output');
-const message = document.getElementById('message');
-const send = document.getElementById('send');
-const feedback = document.getElementById('feedback');
-const roomMessage = document.querySelector('.room-message');
-const users = document.querySelector('.users');
+var socket = io(); 
+function submitfunction(){
+  var from = $('#user').val();
+  var message = $('#m').val();
+  if(message != '') {
+  socket.emit('chatMessage', from, message);
+}
+$('#m').val('').focus();
+  return false;
+}
 
-//Socket server URL
-const socket = io.connect('http://localhost:3000');
+function notifyTyping() { 
+  var user = $('#user').val();
+  socket.emit('notifyUser', user);
+}
 
-//Fetch URL Params from URL
-const queryString = window.location.search;
-const urlParams = new URLSearchParams(queryString);
-const username = urlParams.get('username');
-const roomname = urlParams.get('roomname');
-console.log(username, roomname);
+socket.on('chatMessage', function(from, msg){
+  var me = $('#user').val();
+  var color = (from == me) ? 'green' : '#009afd';
+  var from = (from == me) ? 'Me' : from;
+  $('#messages').append('<li><b style="color:' + color + '">' + from + '</b>: ' + msg + '</li>');
+});
 
-//Display the roomname the user is connected to
-roomMessage.innerHTML = `Connected in room ${roomname}`
+socket.on('notifyUser', function(user){
+  var me = $('#user').val();
+  if(user != me) {
+    $('#notifyUser').text(user + ' is typing ...');
+  }
+  setTimeout(function(){ $('#notifyUser').text(''); }, 10000);;
+});
 
-//Emitting username and roomname of newly joined user to server
-socket.emit('joined-user', {
-    username: username,
-    roomname: roomname
-})
+$(document).ready(function(){
+  var name = makeid();
+  $('#user').val(name);
+  socket.emit('chatMessage', 'System', '<b>' + name + '</b> has joined the discussion');
+});
 
-//Sending data when user clicks send
-send.addEventListener('click', () =>{
-    socket.emit('chat', {
-        username: username,
-        message: message.value,
-        roomname: roomname
-    })
-    message.value = '';
-})
+function makeid() {
+  var text = "";
+  var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
-//Sending username if the user is typing
-message.addEventListener('keypress', () => {
-    socket.emit('typing', {username: username, roomname: roomname})
-})
-
-//Displaying if new user has joined the room
-socket.on('joined-user', (data)=>{
-    output.innerHTML += `<p>--> <strong><em>${data.username}</strong>has Joined the Room</em></p>`;
-})
-
-//Displaying the message sent from user
-socket.on('chat', (data) => {
-    output.innerHTML += `<p><strong>${data.username}</strong>: ${data.message}</p>`;
-    feedback.innerHTML = '';
-    document.querySelector('.chat-message').scrollTop = document.querySelector('.chat-message').scrollHeight
-
-})
-
-//Displaying if a user is typing
-// socket.on('typing', (user) => {
-//     feedback.innerHTML = '<p><em>' + user + ' is typing...</em></p>';
-// })
+  for( var i=0; i < 5; i++ ) {
+    text += possible.charAt(Math.floor(Math.random() * possible.length));
+  }
+  return text;
+}

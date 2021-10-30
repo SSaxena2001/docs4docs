@@ -1,24 +1,17 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Docs4Docs Chat</title>
-    <link rel="stylesheet" href="/style.css">
-    <script src="socket.io/socket.io.js"></script>
+<html>
+ <head>
+  <title>Chat Application</title>
+  <link rel='stylesheet' href='./css/chat.css' type='text/css'/>
+  <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+  <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+  <script src="./js/chat.js"></script>
 </head>
-<body>
-    <h1 class="room-message"></h1>
-    <div class="window">
-        <div class="chat-message">
-            <div id="output"></div>
-            <div id="feedback"></div>
-        </div>
-        <div class='fields'>
-            <input type="text" id="message" placeholder="Enter message">
-            <button id="send">Send</button>
-        </div>
-    </div>
-    <script src="js/chat.js"></script>
+<body> 
+  <ul id="messages"></ul>
+  <span id="notifyUser"></span>
+  <form id="form" action="" onsubmit="return submitfunction();" > 
+    <input type="hidden" id="user" value="" /><input id="m" autocomplete="off" onkeyup="notifyTyping();" placeholder="Type yor message here.." /><input type="submit" id="button" value="Send"/> 
+  </form>
 </body>
 </html>

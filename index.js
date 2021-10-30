@@ -114,11 +114,13 @@ io.on('connection', socket => {
       socket.broadcast.to(roomId).emit('user-disconnected', userId)
     })
   })
+  socket.on('chatMessage', function(from, msg){
+    io.emit('chatMessage', from, msg);
+  });
+  socket.on('notifyUser', function(user){
+    io.emit('notifyUser', user);
+  });
 })
-
-
-
-
 
 
 //^ Doctors Section Below ->
@@ -181,7 +183,6 @@ app.get('/:room', (req, res) => {
   res.render('room', { roomId: req.params.room })
 })
 //^ <------- END ------->
-
 const port = process.env.PORT || 3000;
 server.listen(port, () => {
   console.log(`Listening on http://localhost:${port}`);
