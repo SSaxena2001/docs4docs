@@ -1,0 +1,38 @@
+<%- include("header") -%>
+  <div class="container container1">
+    <h2 style="text-align: center; color: #000">Welcome To <span style="color: #fc8019;">Docs4Docs</span></h2>
+    <div class="form">
+    <form class="container" method="POST" action="/docsignup">
+      <div class="form-group">
+        <label for="name">Doctor Name:</label>
+        <input type="text" class="form-control" placeholder="Enter name" id="name" name="doctor[name]" />
+      </div>
+      <div class="form-group">
+        <label for="email">Email ID:</label>
+        <input type="email" class="form-control" placeholder="Enter email" id="email" name="doctor[email]" />
+      </div>
+      <div class="form-group">
+        <label for="pwd">Password:</label>
+        <input type="password" class="form-control" placeholder="Enter Password" id="pwd"
+          name="doctor[password]" />
+      </div>
+      <div class="form-group">
+        <label for="pwd">Hospital Name:</label>
+        <input type="text" class="form-control" placeholder="Enter Hospital Name" id="hospital_name"
+          name="doctor[hospitalName]" />
+      </div>
+      <div class="form-group">
+        <label for="pwd">Years Of Experience:</label>
+        <input type="text" class="form-control" placeholder="Enter years of experience" id="years_of_experience"
+          name="doctor[yearsOfExperience]" />
+      </div>
+      <div class="form-group">
+        <label>
+          <p>Already a User?&nbsp;<a href="/doc" style="color: #fc8019;">Login</a></p>
+        </label>
+      </div>
+      <button type="submit" class="btn btn-primary">SignUp</button>
+    </form>
+  </div>
+  </div>
+  <!-- <%- include("footer") -%> -->

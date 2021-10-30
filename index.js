@@ -4,10 +4,11 @@ const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const server = require("http").Server(app);
 const socketIO = require("socket.io");
-const { v4: uuidV4 } = require("uuid");
+// const { v4: uuidV4 } = require("uuid");
 const cookieParser = require("cookie-parser");
 const Patient = require("./models/patient.model");
-const { validateUserInput } = require("./utils/validators");
+const Doctor = require("./models/doctor.model");
+// const { validateUserInput } = require("./utils/validators");
 
 app.set("view engine", "ejs");
 app.use(
@@ -37,22 +38,34 @@ app.get("/home", (req, res) => {
   const doctors = [
     {
       name: "Dr. Sumita Reddy",
+      email: "dr.sumita.reddy@gmail.com",
+      password:"sumita",
       yearsOfExperience: "20",
+      hospitalName: "A",
       available: "yes",
     },
     {
       name: "Dr. Ashok Gupta",
+      email: "dr.ashok.gupta@gmail.com",
+      password:"ashok",
       yearsOfExperience: "15",
+      hospitalName: "B",
       available: "yes",
     },
     {
       name: "Dr. RK Srinivasan",
+      email: "dr.rk.srinivasan@gmail.com",
+      password: "srinivasan",
       yearsOfExperience: "05",
+      hospitalName: "C",
       available: "yes",
     },
     {
       name: "Dr. Alka Dubey",
+      email: "dr.alka.dubey@gmail.com",
+      password: "alkadubey",
       yearsOfExperience: "10",
+      hospitalName: "D",
       available: "no",
     },
   ];
@@ -116,9 +129,6 @@ app.post("/signup", (req, res) => {
   });
 });
 
-app.get("/chat", function (req, res) {
-  res.redirect(`/${uuidV4()}`);
-});
 
 app.get("/:roomId/chat", function (req, res) {
   res.render("chat", { roomId: req.params.roomId });
@@ -134,6 +144,64 @@ io.on("connection", (socket) => {
     });
   });
 });
+
+
+
+
+
+
+//^ Doctors Section Below ->
+
+app.get("/doc", (req, res) => {
+  res.render("docLogin");
+});
+
+app.post("/doc", (req, res) => {
+  Doctor.findOne(
+    {
+      email: req.body.email,
+    },
+    function (err, user) {
+      try {
+        if (user.password == req.body.password) {
+          logU = true;
+          message = "";
+          res.cookie("email", req.body.email);
+          res.cookie("password", req.body.password);
+          console.log(req.cookies);
+          res.redirect("/home");
+        } else {
+          res.redirect("/");
+          message = "Invalid Password";
+          console.log(message);
+        }
+      } catch (err) {
+        res.redirect("/");
+        message = "Invalid Email";
+        console.log(message);
+      }
+    }
+  );
+});
+
+app.get("/docsignup", (req, res) => {
+  res.render("docSign");
+});
+
+app.post("/docsignup", (req, res) => {
+  Doctor.create(req.body.user, function (err, doctor) {
+    console.log(doctor);
+    try {
+      console.log(doctor);
+      logU = true;
+      res.redirect("/home");
+    } catch (err) {
+      console.log(err);
+    }
+  });
+});
+
+//^ <------- END ------->
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => {

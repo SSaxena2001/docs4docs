@@ -1,0 +1,25 @@
+<%- include("header") -%>
+  <div class="container container1">
+    <h2 style="text-align: center; color: #000">Welcome To <span style="color: #fc8019;">Docs4Docs</span></h2>
+    <div class="form">
+    <form class="container" method="POST" action="/doc">
+      <h3 style="text-align: center;">Login for Doctors</h3>
+      <div class="form-group">
+        <label for="email">Email address:</label>
+        <input type="email" class="form-control" placeholder="Enter email" id="email" name="email" />
+      </div>
+      <div class="form-group">
+        <label for="pwd">Password:</label>
+        <input type="password" class="form-control" placeholder="Enter password" id="pwd" name="password" />
+      </div>
+      <div class="form-group">
+        <label>
+          Not A User?&nbsp;<a href="/docsignup" style="color: #fc8019;">Sign Up Now</a>
+        </label>
+      </div>
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+  </div>
+  </div>
+  <!-- <%- include("footer") -%> -->
+<body>
