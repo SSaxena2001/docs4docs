@@ -104,6 +104,7 @@ app.get("/:roomId/chat", function (req, res) {
   res.render("chat", { roomId: req.params.roomId });
 });
 
+//SOCKET BROADCAST
 io.on("connection", (socket) => {
   socket.on("join-room", (roomId, userId) => {
     socket.join(roomId);
@@ -174,6 +175,9 @@ app.post("/docsignup", (req, res) => {
   });
 });
 
+app.get('/:room', (req, res) => {
+  res.render('room', { roomId: req.params.room })
+})
 //^ <------- END ------->
 
 const port = process.env.PORT || 3000;

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>In A Call</title>
+  <link href="style.css" rel="stylesheet" type="text/css">
+  <script src="/socket.io/socket.io.js" defer></script>
+  <script src="https://unpkg.com/peerjs@1.3.1/dist/peerjs.min.js" defer></script>
+  <script src="script.js" defer></script>
+  <script src="https://kit.fontawesome.com/c939d0e917.js"></script>
+  
+</head>
+<script>
+  const ROOM_ID='<%= roomId %>';
+</script>
+<body>
+  <body>
+    <div class="header">
+      <div class="logo">
+        <h3>Video Chat</h2>
+      </div>
+    </div>
+    <div class="main">
+      <div class="main__left">
+        <div class="videos__group">
+          <div id="video-grid"></div>
+        </div>
+        <div class="options">
+          <div class="options__left">
+            <div class="options__button">
+              <button id="unvideo"><i class="fa fa-video-camera" aria-hidden="true"></i></button>
+            </div>
+          <div class="options__button">
+              <button id="unmute"><i class="fa fa-microphone" aria-hidden="true"></i></button>
+          </div>
+         </div>
+         <div class="options__right">
+           <div class="options__button background__red">
+             <i class="fa fa-phone" aria-hidden="true"></i>
+           </div>
+         </div>
+       </div>
+      </div>
+      
+    </div>
+  </body>
+</body>
+</html>
