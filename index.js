@@ -4,7 +4,7 @@ const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const server = require("http").Server(app);
 const socketIO = require("socket.io");
-// const { v4: uuidV4 } = require("uuid");
+const { v4: uuidV4 } = require("uuid");
 const cookieParser = require("cookie-parser");
 const Patient = require("./models/patient.model");
 const Doctor = require("./models/doctor.model");
@@ -105,16 +105,16 @@ app.get("/:roomId/chat", function (req, res) {
 });
 
 //SOCKET BROADCAST
-io.on("connection", (socket) => {
-  socket.on("join-room", (roomId, userId) => {
-    socket.join(roomId);
-    socket.broadcast.to(roomId).emit("user-connected", userId);
+io.on('connection', socket => {
+  socket.on('join-room', (roomId, userId) => {
+    socket.join(roomId)
+    socket.broadcast.to(roomId).emit('user-connected', userId)
 
-    socket.on("disconnect", () => {
-      socket.broadcast.to(roomId).emit("user-disconnected", userId);
-    });
-  });
-});
+    socket.on('disconnect', () => {
+      socket.broadcast.to(roomId).emit('user-disconnected', userId)
+    })
+  })
+})
 
 
 
@@ -174,8 +174,10 @@ app.post("/docsignup", (req, res) => {
     }
   });
 });
-
-app.get('/:room', (req, res) => {
+app.get('/video', (req, res) => {
+  res.redirect(`/${req.cookies.docId}/video`)
+})
+app.get('/:room/video', (req, res) => {
   res.render('room', { roomId: req.params.room })
 })
 //^ <------- END ------->
