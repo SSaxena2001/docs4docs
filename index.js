@@ -177,12 +177,12 @@ app.post("/docsignup", (req, res) => {
 app.get('/video', (req, res) => {
   res.redirect(`/${req.cookies.docId}/video`)
 })
-app.get('/:room/video', (req, res) => {
+app.get('/:room', (req, res) => {
   res.render('room', { roomId: req.params.room })
 })
 //^ <------- END ------->
 
 const port = process.env.PORT || 3000;
-app.listen(port, () => {
+server.listen(port, () => {
   console.log(`Listening on http://localhost:${port}`);
 });
