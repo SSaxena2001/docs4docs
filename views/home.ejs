@@ -1,0 +1,12 @@
+<%- include("header") -%>
+<html>
+    
+        <% for( let i = 0; i < listOfDoctors.length; i++ ){%>
+        <ul>
+        <li>Name:<%= listOfDoctors[i].name %></li>
+        <li>Years Of Experience:<%= listOfDoctors[i].yearsOfExperience %></li>
+        <li><a href="/chat">Chat</a></li>
+        <li><a href="/video">Video</a></li>
+        </ul>
+        <%}%>
+</html>
