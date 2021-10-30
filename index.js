@@ -35,41 +35,6 @@ const io = socketIO(server, {
 });
 
 app.get("/home", (req, res) => {
-  const doctors = [
-    {
-      name: "Dr. Sumita Reddy",
-      email: "dr.sumita.reddy@gmail.com",
-      password:"sumita",
-      yearsOfExperience: "20",
-      hospitalName: "A",
-      available: "yes",
-    },
-    {
-      name: "Dr. Ashok Gupta",
-      email: "dr.ashok.gupta@gmail.com",
-      password:"ashok",
-      yearsOfExperience: "15",
-      hospitalName: "B",
-      available: "yes",
-    },
-    {
-      name: "Dr. RK Srinivasan",
-      email: "dr.rk.srinivasan@gmail.com",
-      password: "srinivasan",
-      yearsOfExperience: "05",
-      hospitalName: "C",
-      available: "yes",
-    },
-    {
-      name: "Dr. Alka Dubey",
-      email: "dr.alka.dubey@gmail.com",
-      password: "alkadubey",
-      yearsOfExperience: "10",
-      hospitalName: "D",
-      available: "no",
-    },
-  ];
-  var listOfDoctors = [];
   Doctor.find(
     {
       available:"yes",
@@ -77,15 +42,13 @@ app.get("/home", (req, res) => {
     function (err, doctors) {
       try {
         console.log(doctors)
+        res.render("home",{doctors:doctors})
       } catch (err) {
-        res.redirect("/home");
         message = "No Doctors found!";
         console.log(message);
       }
     }
   );
-  console.log(listOfDoctors);
-  res.render("home", { listOfDoctors: listOfDoctors });
 });
 
 app.get("/", (req, res) => {
