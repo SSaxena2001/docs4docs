@@ -1,8 +1,8 @@
 <%- include("header") -%>
   <div class="container container1">
-    <h3>Welcome To Docs4Docs</h3>
-    <br />
-    <form method="POST" action="/signup">
+    <h2 style="text-align: center; color: #000">Welcome To <span style="color: #fc8019;">Docs4Docs</span></h2>
+    <div class="form">
+    <form class="container" method="POST" action="/signup">
       <div class="form-group">
         <label for="name">Name:</label>
         <input type="text" class="form-control" placeholder="Enter name" id="name" name="user[name]" />
@@ -13,15 +13,16 @@
       </div>
       <div class="form-group">
         <label for="pwd">Password:</label>
-        <input type="password" class="form-control" placeholder="Enter registration number:" id="pwd"
+        <input type="password" class="form-control" placeholder="Enter Password" id="pwd"
           name="user[password]" />
       </div>
       <div class="form-group">
         <label>
-          <p>Already a User?&nbsp;<a href="/">Login</a></p>
+          <p>Already a User?&nbsp;<a href="/" style="color: #fc8019;">Login</a></p>
         </label>
       </div>
       <button type="submit" class="btn btn-primary">SignUp</button>
     </form>
   </div>
-  <%- include("footer") -%>
+  </div>
+  <!-- <%- include("footer") -%> -->
