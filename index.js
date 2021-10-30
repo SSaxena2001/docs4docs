@@ -114,13 +114,25 @@ io.on('connection', socket => {
       socket.broadcast.to(roomId).emit('user-disconnected', userId)
     })
   })
-  socket.on('chatMessage', function(from, msg){
-    io.emit('chatMessage', from, msg);
-  });
-  socket.on('notifyUser', function(user){
-    io.emit('notifyUser', user);
-  });
 })
+
+io.on('connection', (socket) => {
+  console.log('new user connected');
+  
+  socket.on('joining msg', (username) => {
+  	name = username;
+  	io.emit('chat message', `---${name} joined the chat---`);
+  });
+  
+  socket.on('disconnect', () => {
+    console.log('user disconnected');
+    io.emit('chat message', `---${name} left the chat---`);
+    
+  });
+  socket.on('chat message', (msg) => {
+    socket.broadcast.emit('chat message', msg);         //sending message to all except the sender
+  });
+});
 
 
 //^ Doctors Section Below ->
@@ -179,7 +191,7 @@ app.post("/docsignup", (req, res) => {
 app.get('/video', (req, res) => {
   res.redirect(`/${req.cookies.docId}/video`)
 })
-app.get('/:room', (req, res) => {
+app.get('/:room/video', (req, res) => {
   res.render('room', { roomId: req.params.room })
 })
 //^ <------- END ------->
