@@ -8,7 +8,7 @@ const doctorSchema = new mongoose.Schema({
   yearsOfExperience: String,
   hospitalName: String,
   patientsList: Array,
-  available: String,
+  available: {type:String, default:"yes"},
 });
 
 module.exports = mongoose.model("Doctor", doctorSchema);

@@ -70,11 +70,20 @@ app.get("/home", (req, res) => {
     },
   ];
   var listOfDoctors = [];
-  for (let i = 0; i < doctors.length; i++) {
-    if (doctors[i].available === "yes") {
-      listOfDoctors.push(doctors[i]);
+  Doctor.find(
+    {
+      available:"yes",
+    },
+    function (err, doctors) {
+      try {
+        listOfDoctors.push(doctors[k++])
+      } catch (err) {
+        res.redirect("/");
+        message = "Invalid Email";
+        console.log(message);
+      }
     }
-  }
+  );
 
   console.log(listOfDoctors);
   res.render("home", { listOfDoctors: listOfDoctors });
