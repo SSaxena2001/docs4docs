@@ -151,7 +151,9 @@ io.on("connection", (socket) => {
 
 
 //^ Doctors Section Below ->
-
+app.get("/docWait",(req,res)=>{
+  res.render("docWait")
+})
 app.get("/doc", (req, res) => {
   res.render("docLogin");
 });
@@ -194,7 +196,7 @@ app.post("/docsignup", (req, res) => {
     try {
       console.log(doctor);
       logU = true;
-      res.redirect("/home");
+      res.redirect("/docWait");
     } catch (err) {
       console.log(err);
     }

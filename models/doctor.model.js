@@ -1,11 +1,5 @@
 const mongoose = require("mongoose");
 
-const PatientSchema = new mongoose.Schema({
-  name: String,
-  email: String,
-  password: String,
-  typeOfDemand: String,
-});
 
 const doctorSchema = new mongoose.Schema({
   name: String,
@@ -13,7 +7,7 @@ const doctorSchema = new mongoose.Schema({
   password: String,
   yearsOfExperience: String,
   hospitalName: String,
-  patients: [PatientSchema],
+  patientsList: Array,
   available: String,
 });
 
