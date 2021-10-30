@@ -1,0 +1,62 @@
+body {
+	/*background: url(images/doc1.jpg);*/
+	/*background-image: url("images/doc.jpg"), linear-gradient(#000000, #000000);*/
+	background-image: linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.1)), url("images/back.jpg");
+
+	background-attachment: fixed;
+	background-size: cover;
+	background-repeat: no-repeat;
+	
+}
+
+.form {
+	width: 350px;
+	height: 420px;
+	align-content: center;
+	/*box-shadow: -4px 4px 13px #666666, 11px 7px 23px #c7c7c7;*/
+	border-radius: 20px;
+	/*background: #e0e0e0;*/
+	box-shadow:  20px 20px 60px #bebebe,
+             -20px -20px 60px #ffffff;
+	margin: auto;
+	padding: auto;
+	/*background: #ffffff;*/
+	vertical-align: middle;
+	margin-top: 9%;
+	border: 1px solid transparent;
+	/*border-radius: 20px;*/
+	backdrop-filter: blur(25px);
+}
+
+.container {
+	margin-top: 8%;
+	margin: 40px;
+}
+
+label {
+	color: rgb(0,0,0);
+}
+
+#emailHelp {
+	color: rgb(0,0,0) !important;
+}
+
+.form button {
+	margin: 10px 39%;
+	color: #fc8019;
+	background-color: #ffffff;
+	/*border: 1px solid transparent !important;*/
+	border: none !important;
+	box-shadow: 5px 10px 5px #eeeeee inset;
+
+}
+
+.form-control {
+	width: 95% !important;
+}
+
+.form button:hover {
+	color: #fc8019;
+	background-color: #ffffff !important;
+	box-shadow: 0px 00px 0px #aaaaaa;
+}
