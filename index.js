@@ -6,7 +6,7 @@ const server = require("http").Server(app);
 const socketIO = require("socket.io");
 const { v4: uuidV4 } = require("uuid");
 const cookieParser = require("cookie-parser");
-const User = require("./models/user.model");
+const Patient = require("./models/patient.model");
 const { validateUserInput } = require("./utils/validators");
 
 app.set("view engine", "ejs");
@@ -17,14 +17,14 @@ app.use(
 );
 app.use(express.static("public"));
 
-
-  
-
 app.use(cookieParser());
 mongoose
-     .connect("mongodb://localhost:27017/hackDB", { useNewUrlParser: true, useUnifiedTopology: true })
-     .then(() => console.log( 'Database Connected' ))
-     .catch(err => console.log( err ));
+  .connect(
+    "mongodb+srv://admin-suvigya:suv1402@cluster0.xva3j.mongodb.net/docs4docsDB?retryWrites=true&w=majority",
+    { useNewUrlParser: true, useUnifiedTopology: true }
+  )
+  .then(() => console.log("Database Connected"))
+  .catch((err) => console.log(err));
 
 const io = socketIO(server, {
   cors: {
@@ -33,82 +33,81 @@ const io = socketIO(server, {
   },
 });
 
-app.get("/home",(req,res)=>{
-  const doctors=
-  [
+app.get("/home", (req, res) => {
+  const doctors = [
     {
-      "name":"Dr. Sumita Reddy", 
-      "yearsOfExperience":"20",
-      "available":"yes"
+      name: "Dr. Sumita Reddy",
+      yearsOfExperience: "20",
+      available: "yes",
     },
     {
-      "name":"Dr. Ashok Gupta", 
-      "yearsOfExperience":"15",
-      "available":"yes"
+      name: "Dr. Ashok Gupta",
+      yearsOfExperience: "15",
+      available: "yes",
     },
     {
-      "name":"Dr. RK Srinivasan", 
-      "yearsOfExperience":"05",
-      "available":"yes"
+      name: "Dr. RK Srinivasan",
+      yearsOfExperience: "05",
+      available: "yes",
     },
     {
-      "name":"Dr. Alka Dubey", 
-      "yearsOfExperience":"10",
-      "available":"no"
-    }
-  ]
-  var listOfDoctors=[]
+      name: "Dr. Alka Dubey",
+      yearsOfExperience: "10",
+      available: "no",
+    },
+  ];
+  var listOfDoctors = [];
   for (let i = 0; i < doctors.length; i++) {
-      if (doctors[i].available==="yes") {
-          listOfDoctors.push(doctors[i]);
-      }
+    if (doctors[i].available === "yes") {
+      listOfDoctors.push(doctors[i]);
+    }
   }
 
-  console.log(listOfDoctors)
-  res.render("home",{listOfDoctors:listOfDoctors})
-})
+  console.log(listOfDoctors);
+  res.render("home", { listOfDoctors: listOfDoctors });
+});
 
 app.get("/", (req, res) => {
   res.render("login");
 });
 
 app.post("/", (req, res) => {
-  User.find(
-      {
-        username: req.body.username,
-      },
-      function (err, user) {
-        try {
-          if (user.password == req.body.password) {
-            logU = true;
-            message = "";
-            res.cookie("username", req.body.username);
-            res.cookie("password", req.body.password);
-            console.log(req.cookies);
-            res.redirect("/home");
-          } else {
-            res.redirect("/");
-            message = "Invalid Password";
-            console.log(message);
-          }
-        } catch (err) {
+  Patient.findOne(
+    {
+      email: req.body.email,
+    },
+    function (err, user) {
+      try {
+        if (user.password == req.body.password) {
+          logU = true;
+          message = "";
+          res.cookie("email", req.body.email);
+          res.cookie("password", req.body.password);
+          console.log(req.cookies);
+          res.redirect("/home");
+        } else {
           res.redirect("/");
-          message = "Invalid Email";
+          message = "Invalid Password";
           console.log(message);
         }
+      } catch (err) {
+        res.redirect("/");
+        message = "Invalid Email";
+        console.log(message);
       }
-    );
-  });
+    }
+  );
+});
 
 app.get("/signup", (req, res) => {
   res.render("signup");
 });
 
 app.post("/signup", (req, res) => {
-  User.create(req.body.user, function (err, user) {
-    console.log(user);
+  Patient.create(req.body.user, function (err, patient) {
+    console.log(patient);
     try {
-      console.log(user);
+      console.log(patient);
       logU = true;
       res.redirect("/home");
     } catch (err) {
