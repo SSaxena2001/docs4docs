@@ -1,46 +1,19 @@
-var socket = io(); 
-function submitfunction(){
-  var from = $('#user').val();
-  var message = $('#m').val();
-  if(message != '') {
-  socket.emit('chatMessage', from, message);
-}
-$('#m').val('').focus();
+var socket = io.connect("http://localhost:3000");
+// submit text message without reload/refresh the page
+$("form").submit(function (e) {
+  e.preventDefault(); // prevents page reloading
+  socket.emit("chat_message", $("#txt").val());
+  $("#txt").val("");
   return false;
-}
-
-function notifyTyping() { 
-  var user = $('#user').val();
-  socket.emit('notifyUser', user);
-}
-
-socket.on('chatMessage', function(from, msg){
-  var me = $('#user').val();
-  var color = (from == me) ? 'green' : '#009afd';
-  var from = (from == me) ? 'Me' : from;
-  $('#messages').append('<li><b style="color:' + color + '">' + from + '</b>: ' + msg + '</li>');
 });
-
-socket.on('notifyUser', function(user){
-  var me = $('#user').val();
-  if(user != me) {
-    $('#notifyUser').text(user + ' is typing ...');
-  }
-  setTimeout(function(){ $('#notifyUser').text(''); }, 10000);;
+// append the chat text message
+socket.on("chat_message", function (msg) {
+  $("#messages").append($("<li>").html(msg));
 });
-
-$(document).ready(function(){
-  var name = makeid();
-  $('#user').val(name);
-  socket.emit('chatMessage', 'System', '<b>' + name + '</b> has joined the discussion');
+// append text if someone is online
+socket.on("is_online", function (username) {
+  $("#messages").append($("<li>").html(username));
 });
-
-function makeid() {
-  var text = "";
-  var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-
-  for( var i=0; i < 5; i++ ) {
-    text += possible.charAt(Math.floor(Math.random() * possible.length));
-  }
-  return text;
-}
+// ask username
+var username = prompt("Please tell me your name");
+socket.emit("username", username);
