@@ -1,11 +1,13 @@
 const express = require('express');
-const http = require('http');
-const socketIO = require('socket.io');
-
-
 const app = express();
+const server = require('http').Server(app);
+const socketIO = require('socket.io');
+const { v4: uuidV4 } = require('uuid');
 
-const server = http.createServer(app);
+
+app.set('view engine', 'ejs');
+app.use(express.static('public'));
+
 
 const io = socketIO(server, {
     cors: {
@@ -15,8 +17,18 @@ const io = socketIO(server, {
 });
 
 
+app.get('/', function(req, res) {
+    res.redirect(`/${uuidV4()}`);
+});
 
-const port = process.env.PORT || 5000;
+app.get('/chat', function(req, res) {
+    res.render('chat');
+})
+
+
+
+
+const port = process.env.PORT || 3000;
 app.listen(port, () => {
     console.log(`Listening on http://localhost:${port}`);
 });
