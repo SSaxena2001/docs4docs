@@ -189,7 +189,7 @@ app.get("/docsignup", (req, res) => {
 });
 
 app.post("/docsignup", (req, res) => {
-  Doctor.create(req.body.user, function (err, doctor) {
+  Doctor.create(req.body.doctor, function (err, doctor) {
     console.log(doctor);
     try {
       console.log(doctor);
