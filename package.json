@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon index.js && peerjs --port 3001"
+    "start": "nodemon index.js"
   },
   "keywords": [],
   "author": "",

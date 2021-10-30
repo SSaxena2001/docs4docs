@@ -32,6 +32,7 @@
   overflow: hidden;
   height: 92vh;
   display: flex;
+  /*background-image: linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.1)), url("images/back.jpg");*/
 }
 
 .main__left {
@@ -40,13 +41,23 @@
   flex-direction: column;
 }
 
+.bg-image {
+  background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url("images/back.jpg");
+  background-attachment: fixed;
+  background-size: cover;
+  background-repeat: no-repeat;
+  backdrop-filter: blur(100px);
+}
+
 .videos__group {
   flex-grow: 1;
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 1rem;
-  background-color: #eeeeee;
+  /*background-color: #eeeeee;*/
+  backdrop-filter: blur(18px);
+  
 }
 
 video {
@@ -191,4 +202,14 @@ video {
   #showChat {
     display: flex;
   }
+}
+
+#unvideo {
+  border: none;
+  padding: 16px;
+}
+
+#unmute {
+  border: none;
+  padding: 16px;
 }
