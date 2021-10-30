@@ -41,7 +41,6 @@ app.get("/home", (req, res) => {
     },
     function (err, doctors) {
       try {
-        console.log(doctors)
         res.render("home",{doctors:doctors})
       } catch (err) {
         message = "No Doctors found!";
@@ -141,6 +140,7 @@ app.post("/doc", (req, res) => {
           message = "";
           res.cookie("email", req.body.email);
           res.cookie("password", req.body.password);
+          res.cookie("docId", user._id);
           console.log(req.cookies);
           res.redirect("/home");
         } else {
