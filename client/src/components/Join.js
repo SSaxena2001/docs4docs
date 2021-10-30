@@ -1,9 +1,13 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-
+import { v4 as uuidv4 } from "uuid";
 const Join = () => {
   const [name, setName] = useState("");
   const [room, setRoom] = useState("");
+
+  const makeRoom = () => {
+    setRoom(uuidv4());
+  }
 
   return (
     <div className="joinOuterContainer">
@@ -17,19 +21,19 @@ const Join = () => {
             onChange={(e) => setName(e.target.value)}
           />
         </div>
-        <div>
+        {/* <div>
           <input
             type="text"
             className="joinInput mt-20"
             placeholder="Room"
             onChange={(e) => setRoom(e.target.value)}
           />
-        </div>
+        </div> */}
         <Link
           onClick={(event) => (!name || !room ? event.preventDefault() : null)}
           to={`/chat?name=${name}&room=${room}`}
         >
-          <button className="button mt-20" type="submit">
+          <button className="button mt-20" type="submit" onClick={makeRoom}>
             Sign In
           </button>
         </Link>
