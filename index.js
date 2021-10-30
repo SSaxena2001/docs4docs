@@ -17,14 +17,14 @@ app.use(
 );
 app.use(express.static("public"));
 
+
+  
+
 app.use(cookieParser());
-mongoose.connect("mongodb://localhost:27017/hackDB", {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
-mongoose.connection.once("open", () => {
-  console.log("connected to MONGO");
-});
+mongoose
+     .connect("mongodb://localhost:27017/hackDB", { useNewUrlParser: true, useUnifiedTopology: true })
+     .then(() => console.log( 'Database Connected' ))
+     .catch(err => console.log( err ));
 
 const io = socketIO(server, {
   cors: {
@@ -33,18 +33,47 @@ const io = socketIO(server, {
   },
 });
 
+app.get("/home",(req,res)=>{
+  const doctors=
+  [
+    {
+      "name":"Dr. Sumita Reddy", 
+      "yearsOfExperience":"20",
+      "available":"yes"
+    },
+    {
+      "name":"Dr. Ashok Gupta", 
+      "yearsOfExperience":"15",
+      "available":"yes"
+    },
+    {
+      "name":"Dr. RK Srinivasan", 
+      "yearsOfExperience":"05",
+      "available":"yes"
+    },
+    {
+      "name":"Dr. Alka Dubey", 
+      "yearsOfExperience":"10",
+      "available":"no"
+    }
+  ]
+  var listOfDoctors=[]
+  for (let i = 0; i < doctors.length; i++) {
+      if (doctors[i].available==="yes") {
+          listOfDoctors.push(doctors[i]);
+      }
+  }
+
+  console.log(listOfDoctors)
+  res.render("home",{listOfDoctors:listOfDoctors})
+})
+
 app.get("/", (req, res) => {
   res.render("login");
 });
 
 app.post("/", (req, res) => {
-  console.log(req.body);
-  let { errors, valid } = validateUserInput(
-    req.body.email,
-    req.body.password
-  );
-  if (valid) {
-    User.findOne(
+  User.find(
       {
         username: req.body.username,
       },
@@ -56,7 +85,7 @@ app.post("/", (req, res) => {
             res.cookie("username", req.body.username);
             res.cookie("password", req.body.password);
             console.log(req.cookies);
-            res.redirect(`/${uuidV4()}`);
+            res.redirect("/home");
           } else {
             res.redirect("/");
             message = "Invalid Password";
@@ -69,11 +98,7 @@ app.post("/", (req, res) => {
         }
       }
     );
-  } else {
-    console.log(errors);
-    res.redirect("/");
-  }
-});
+  });
 
 app.get("/signup", (req, res) => {
   res.render("signup");
@@ -85,7 +110,7 @@ app.post("/signup", (req, res) => {
     try {
       console.log(user);
       logU = true;
-      res.redirect("/");
+      res.redirect("/home");
     } catch (err) {
       console.log(err);
     }
