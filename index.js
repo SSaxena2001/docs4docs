@@ -99,6 +99,9 @@ app.post("/signup", (req, res) => {
   });
 });
 
+app.get('/chat', (req, res) => {
+  res.redirect(`/${req.cookies.docId}/chat`)
+});
 
 app.get("/:roomId/chat", function (req, res) {
   res.render("chat", { roomId: req.params.roomId });
